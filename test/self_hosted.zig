@@ -1651,3 +1651,87 @@ fn use_generic_param_in_generic_param() {
 fn a_generic_fn(T: type, a: T)(b: T) -> T {
     return a + b;
 }
+
+
+#attribute("test")
+fn namespace_depends_on_compile_var() {
+    if (some_namespace.a_bool) {
+        assert(some_namespace.a_bool);
+    } else {
+        assert(!some_namespace.a_bool);
+    }
+}
+const some_namespace = switch(@compile_var("os")) {
+    linux => @import("a.zig"),
+    else => @import("b.zig"),
+};
+
+
+#attribute("test")
+fn unsigned_64_bit_division() {
+    const result = div(1152921504606846976, 34359738365);
+    assert(result.quotient == 33554432);
+    assert(result.remainder == 100663296);
+}
+#static_eval_enable(false)
+fn div(a: u64, b: u64) -> DivResult {
+    DivResult {
+        .quotient = a / b,
+        .remainder = a % b,
+    }
+}
+struct DivResult {
+    quotient: u64,
+    remainder: u64,
+}
+
+#attribute("test")
+fn int_type_builtin() {
+    assert(@int_type(true, 8, false) == i8);
+    assert(@int_type(true, 16, false) == i16);
+    assert(@int_type(true, 32, false) == i32);
+    assert(@int_type(true, 64, false) == i64);
+
+    assert(@int_type(false, 8, false) == u8);
+    assert(@int_type(false, 16, false) == u16);
+    assert(@int_type(false, 32, false) == u32);
+    assert(@int_type(false, 64, false) == u64);
+
+    assert(@int_type(true, 8, true) == i8w);
+    assert(@int_type(true, 16, true) == i16w);
+    assert(@int_type(true, 32, true) == i32w);
+    assert(@int_type(true, 64, true) == i64w);
+
+    assert(@int_type(false, 8, true) == u8w);
+    assert(@int_type(false, 16, true) == u16w);
+    assert(@int_type(false, 32, true) == u32w);
+    assert(@int_type(false, 64, true) == u64w);
+
+    assert(i8.bit_count == 8);
+    assert(i16.bit_count == 16);
+    assert(i32.bit_count == 32);
+    assert(i64.bit_count == 64);
+
+    assert(!i8.is_wrapping);
+    assert(!i16.is_wrapping);
+    assert(!i32.is_wrapping);
+    assert(!i64.is_wrapping);
+
+    assert(i8w.is_wrapping);
+    assert(i16w.is_wrapping);
+    assert(i32w.is_wrapping);
+    assert(i64w.is_wrapping);
+
+    assert(i8.is_signed);
+    assert(i16.is_signed);
+    assert(i32.is_signed);
+    assert(i64.is_signed);
+    assert(isize.is_signed);
+
+    assert(!u8.is_signed);
+    assert(!u16.is_signed);
+    assert(!u32.is_signed);
+    assert(!u64.is_signed);
+    assert(!usize.is_signed);
+
+}
