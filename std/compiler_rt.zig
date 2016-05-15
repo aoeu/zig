@@ -222,13 +222,13 @@ export fn __umoddi3(a: du_int, b: du_int) -> du_int {
     return r;
 }
 
-struct AebiUlDivModResult {
+struct AeabiUlDivModResult {
     quot: u64,
     rem: u64,
 }
 #debug_safety(false)
-export fn __aebi_uldivmod(numerator: u64, denominator: u64) -> AebiUlDivModResult{
-    var result: AebiUlDivModResult = undefined;
+export fn __aeabi_uldivmod(numerator: u64, denominator: u64) -> AeabiUlDivModResult{
+    var result: AeabiUlDivModResult = undefined;
     result.quot = __udivmoddi4(numerator, denominator, &result.rem);
     return result;
 }
