@@ -29,7 +29,7 @@ export fn _start() -> unreachable {
           // TODO: Implement setting argc and argv.
           // Reference: musl/arch/arm/crt_arch.h and musl/ldso/dlstart.c
         },
-        else => unreachable{},
+        else => @compile_err("unsupported arch"),
     }
     call_main_and_exit()
 }
