@@ -720,6 +720,7 @@ static FloatAbi get_float_abi(const Triple &triple) {
     zig_panic("TODO implement get_float_abi for ARM");
 }
 
+// ???: Does this have anything to do with the linker error and segfault?
 Buf *get_dynamic_linker(LLVMTargetMachineRef target_machine_ref) {
     TargetMachine *target_machine = reinterpret_cast<TargetMachine*>(target_machine_ref);
     const Triple &triple = target_machine->getTargetTriple();

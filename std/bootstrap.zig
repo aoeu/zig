@@ -27,7 +27,7 @@ export fn _start() -> unreachable {
         },
         armv7 => {
           // TODO: Implement setting argc and argv.
-          // Reference: musl/arch/arm/crt_arch.h and musl/ldso/dlstart.c
+          // Reference: $HOME/musl/arch/arm/crt_arch.h:20 and $HOME/musl/ldso/dlstart.c:21
         },
         else => @compile_err("unsupported arch"),
     }

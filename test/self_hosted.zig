@@ -361,6 +361,7 @@ fn enum_type() {
     assert(bar == EnumTypeBar.B);
     assert(@member_count(EnumTypeFoo) == 3);
     assert(@member_count(EnumTypeBar) == 4);
+    // TODO: Why are we segfaulting on armv7 due to this line?
     assert(@sizeof(EnumTypeFoo) >= 16);
     assert(@sizeof(EnumTypeBar) == 1);
 }
